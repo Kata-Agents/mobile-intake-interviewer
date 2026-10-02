@@ -10,7 +10,7 @@ It holds nothing between calls and says so. The brief travels as an argument, be
 
 ## What this is, precisely
 
-A FindAgent **`mcp-tool`** agent. Each of its 6 tools is a
+A FindAgent **`mcp-tool`** agent. Each of its 8 tools is a
 `prompt-template` action: the tool renders an instruction and hands it back to the
 model that called it.
 
@@ -29,7 +29,9 @@ Two consequences worth being blunt about, because they decide whether this is us
 
 | Tool | What it returns | Required input |
 |---|---|---|
-| `open_brief` | Open an intake brief from a raw request: the brief skeleton, the decisions that must be closed before anyone builds, and the order to close them in. | `request` |
+| `discover_intent` | Classify an incoming request, name the department route it takes, the first tool to call, and which members bear on it — so the order of work is read rather than guessed. | `request` |
+| `list_capabilities` | List the department's members and what each one owes the others, filtered to the task in hand, so the roster is readable without calling every member to find out. | `task` |
+| `open_brief` | Open an intake brief from a raw request: the brief skeleton, the decisions that must be closed before anyone builds, and the order to close them in. This is the department's front door — call it before any other member. | `request` |
 | `ask_next_question` | Given the brief so far, produce the single next question to put to the requester, with the decision it closes and what changes either way — one question, not a list. | `brief_so_far` |
 | `record_answer` | Record an answer into the brief and score whether it actually closed the decision, judging what the answer commits to rather than matching it against a list of phrases. | `brief_so_far`, `question`, `answer` |
 | `assess_readiness` | Score how ready a brief is to hand to design and build, against a stated threshold, and name what is still blocking it — refusing to inflate the score to end the interview. | `brief_so_far` |
